@@ -36,10 +36,9 @@
     </div>
 
     <!-- Panel Kanan -->
-    <div
-      class="md:w-1/2 w-full bg-gray-50 flex items-center justify-center p-6"
-    >
-      <Dashboard />
+    <div class="md:w-1/2 w-full bg-gray-50 flex items-center justify-center p-6">
+      <!-- 👇 Tambahkan listener event dari Dashboard -->
+      <Dashboard @prediksi-berhasil="getRiwayat" />
     </div>
   </div>
 </template>
@@ -56,13 +55,24 @@ const goToVisualisasi = () => {
   router.push('/visualisasi')
 }
 
-onMounted(async () => {
+// ✅ Fungsi yang bisa dipanggil dari Dashboard setelah prediksi berhasil
+const getRiwayat = async () => {
   try {
-    const res = await fetch('http://localhost:5000/api/data')
+    const res = await fetch('http://localhost:8000/riwayat')
     const json = await res.json()
-    tableData.value = json
+
+    if (json.status === 'success') {
+      tableData.value = json.data
+    } else {
+      console.error('Gagal mengambil data:', json)
+    }
   } catch (error) {
     console.error('Gagal mengambil data:', error)
   }
+}
+
+// 👇 Pertama kali halaman diload
+onMounted(() => {
+  getRiwayat()
 })
 </script>

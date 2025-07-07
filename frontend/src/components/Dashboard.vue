@@ -45,6 +45,7 @@
             <option>Hujan Sedang</option>
           </select>
 
+          <!-- Tombol Submit -->
           <button
             @click="kirim"
             class="submit-btn w-full"
@@ -53,6 +54,7 @@
             {{ loading ? 'Memproses...' : 'Prediksi' }}
           </button>
 
+          <!-- Hasil -->
           <div
             v-if="hasil"
             class="mt-4 font-semibold text-hitam p-4 bg-green-50 border border-green-300 rounded-lg space-y-2"
@@ -78,6 +80,9 @@
 <script setup>
 import { ref } from 'vue'
 import axios from 'axios'
+
+// ✅ Emit event ke parent
+const emit = defineEmits(['prediksi-berhasil'])
 
 const tanggal = ref('')
 const suhu = ref('')
@@ -110,6 +115,9 @@ const kirim = async () => {
 
     if (res.data.status === 'success') {
       hasil.value = res.data.predictions
+
+      // ✅ Panggil emit agar parent bisa refresh tabel
+      emit('prediksi-berhasil')
     } else {
       error.value = '❌ Gagal memproses prediksi.'
     }
@@ -120,7 +128,6 @@ const kirim = async () => {
     loading.value = false
   }
 }
-
 </script>
 
 <style scoped>
