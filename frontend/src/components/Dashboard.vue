@@ -18,15 +18,21 @@
         <div class="space-y-4">
           <!-- Input Form -->
           <input
-            v-model="kelembaban"
-            type="number"
-            placeholder="Kelembaban (%)"
+            v-model="tanggal"
+            type="date"
+            placeholder="Tanggal"
             class="input-field text-putih"
           />
           <input
             v-model="suhu"
             type="number"
             placeholder="Suhu (°C)"
+            class="input-field text-putih"
+          />
+          <input
+            v-model="kelembaban"
+            type="number"
+            placeholder="Kelembaban (%)"
             class="input-field text-putih"
           />
           <select v-model="cuaca" class="input-field text-putih">
@@ -73,8 +79,9 @@
 import { ref } from 'vue'
 import axios from 'axios'
 
-const kelembaban = ref('')
+const tanggal = ref('')
 const suhu = ref('')
+const kelembaban = ref('')
 const cuaca = ref('')
 const hasil = ref(null)
 const error = ref('')
@@ -85,19 +92,21 @@ const kirim = async () => {
   error.value = ''
   loading.value = true
 
-  if (!kelembaban.value || !suhu.value || !cuaca.value.trim()) {
+  if (!tanggal.value || !suhu.value || !kelembaban.value || !cuaca.value.trim()) {
     error.value = '❌ Harap isi semua input terlebih dahulu.'
     loading.value = false
     return
   }
 
-  try {
-    const res = await axios.post('http://localhost:5000/api/predict', {
-  kelembaban: parseFloat(kelembaban.value),
-  suhu: parseFloat(suhu.value),
-  cuaca: cuaca.value
-})
+  const payload = {
+    tanggal: tanggal.value,
+    suhu: parseFloat(suhu.value),
+    kelembapan: parseFloat(kelembaban.value),
+    cuaca: cuaca.value
+  }
 
+  try {
+    const res = await axios.post('http://localhost:8000/predict', payload)
 
     if (res.data.status === 'success') {
       hasil.value = res.data.predictions
@@ -111,6 +120,7 @@ const kirim = async () => {
     loading.value = false
   }
 }
+
 </script>
 
 <style scoped>
