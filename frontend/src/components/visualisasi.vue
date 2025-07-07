@@ -46,7 +46,7 @@
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import axios from 'axios'
-// import LineChart from '../components/LineChart.vue'
+import LineChart from './LineChart.vue' // Karena file ada di folder yang sama
 
 const router = useRouter()
 const goToDashboard = () => {
@@ -93,23 +93,27 @@ const fetchData = async () => {
   isLoading.value = true
 
   try {
-    const res = await axios.get('http://localhost:5000/statistik', {
+    const res = await axios.get('http://localhost:8000/riwayat', {
       params: {
         start: tanggalAwal.value,
         end: tanggalAkhir.value,
       },
     })
 
-    if (res.data.length === 0) {
+    console.log('Hasil respon:', res.data) // 🔍 debugging
+
+    const records = res.data.data // 👈 ubah ini sesuai struktur respons
+
+    if (!Array.isArray(records) || records.length === 0) {
       errorMessage.value = 'Tidak ada data ditemukan untuk rentang tanggal tersebut.'
     } else {
-      const labels = res.data.map(d => d.tanggal)
+      const labels = records.map(d => d.tanggal)
       chartData.value = {
         labels,
         datasets: [
           {
             label: 'DBD',
-            data: res.data.map(d => d.dbd),
+            data: records.map(d => d.dbd),
             borderColor: '#ef4444',
             backgroundColor: '#fecaca',
             fill: false,
@@ -117,7 +121,7 @@ const fetchData = async () => {
           },
           {
             label: 'Influenza',
-            data: res.data.map(d => d.influenza),
+            data: records.map(d => d.influenza),
             borderColor: '#3b82f6',
             backgroundColor: '#bfdbfe',
             fill: false,
@@ -125,7 +129,7 @@ const fetchData = async () => {
           },
           {
             label: 'ISPA',
-            data: res.data.map(d => d.ispa),
+            data: records.map(d => d.ispa),
             borderColor: '#10b981',
             backgroundColor: '#d1fae5',
             fill: false,
@@ -141,6 +145,7 @@ const fetchData = async () => {
     isLoading.value = false
   }
 }
+
 </script>
 
 <style scoped>
