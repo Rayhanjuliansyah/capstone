@@ -1,10 +1,17 @@
 <template>
   <div class="page-container">
     <div class="content-container">
-      <!-- Tombol Kembali -->
-      <div class="back-button-container">
-        <button @click="goToDashboard" class="back-btn">← Dashboard    </button>
-      </div>
+   
+<div class="mb-6">
+  <router-link
+    to="/homepage"
+    class="inline-block bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded transition"
+  >
+    ← Kembali ke Dashboard
+  </router-link>
+</div>
+
+
 
       <h1 class="page-title">📊 Visualisasi Statistik Penyakit</h1>
 
@@ -46,7 +53,7 @@
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import axios from 'axios'
-import LineChart from './LineChart.vue' // Karena file ada di folder yang sama
+import LineChart from './LineChart.vue'
 
 const router = useRouter()
 const goToDashboard = () => {
@@ -93,7 +100,7 @@ const fetchData = async () => {
   isLoading.value = true
 
   try {
-    const res = await axios.get('http://localhost:8000/riwayat', {
+    const res = await axios.get('http://localhost:8000/riwayat/filter', {
       params: {
         start: tanggalAwal.value,
         end: tanggalAkhir.value,
@@ -102,7 +109,7 @@ const fetchData = async () => {
 
     console.log('Hasil respon:', res.data) // 🔍 debugging
 
-    const records = res.data.data // 👈 ubah ini sesuai struktur respons
+    const records = res.data.data 
 
     if (!Array.isArray(records) || records.length === 0) {
       errorMessage.value = 'Tidak ada data ditemukan untuk rentang tanggal tersebut.'

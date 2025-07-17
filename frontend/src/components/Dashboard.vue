@@ -3,10 +3,10 @@
     class="w-screen h-screen bg-cover bg-center bg-no-repeat relative overflow-hidden"
     style="background-image: url('https://source.unsplash.com/featured/?weather');"
   >
-    <!-- Overlay gelap -->
+ 
     <div class="absolute inset-0 bg-black bg-opacity-50"></div>
 
-    <!-- Konten di tengah layar -->
+    
     <div class="absolute inset-0 z-10 flex justify-center items-center px-4">
       <div
         class="form-container text-black bg-white bg-opacity-90 p-8 rounded-2xl shadow-2xl w-full max-w-lg"
@@ -45,7 +45,7 @@
             <option>Hujan Sedang</option>
           </select>
 
-          <!-- Tombol Submit -->
+         
           <button
             @click="kirim"
             class="submit-btn w-full"
@@ -54,7 +54,7 @@
             {{ loading ? 'Memproses...' : 'Prediksi' }}
           </button>
 
-          <!-- Hasil -->
+       
           <div
             v-if="hasil"
             class="mt-4 font-semibold text-hitam p-4 bg-green-50 border border-green-300 rounded-lg space-y-2"
@@ -81,7 +81,7 @@
 import { ref } from 'vue'
 import axios from 'axios'
 
-// ✅ Emit event ke parent
+// ✅ 
 const emit = defineEmits(['prediksi-berhasil'])
 
 const tanggal = ref('')

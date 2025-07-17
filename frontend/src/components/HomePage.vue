@@ -37,7 +37,6 @@
 
     <!-- Panel Kanan -->
     <div class="md:w-1/2 w-full bg-gray-50 flex items-center justify-center p-6">
-      <!-- 👇 Tambahkan listener event dari Dashboard -->
       <Dashboard @prediksi-berhasil="getRiwayat" />
     </div>
   </div>
@@ -55,7 +54,7 @@ const goToVisualisasi = () => {
   router.push('/visualisasi')
 }
 
-// ✅ Fungsi yang bisa dipanggil dari Dashboard setelah prediksi berhasil
+// ✅ Memanggil api riwayat
 const getRiwayat = async () => {
   try {
     const res = await fetch('http://localhost:8000/riwayat')
@@ -71,7 +70,7 @@ const getRiwayat = async () => {
   }
 }
 
-// 👇 Pertama kali halaman diload
+
 onMounted(() => {
   getRiwayat()
 })

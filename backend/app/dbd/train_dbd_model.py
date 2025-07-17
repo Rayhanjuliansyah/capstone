@@ -7,7 +7,7 @@ from sklearn.metrics import mean_squared_error, r2_score
 import os
 
 # Load dataset
-df = pd.read_csv("dataset_dbd.csv")  # Pastikan file berada di direktori yang sama
+df = pd.read_csv("dataset_dbd.csv") 
 
 # Preprocessing
 X = df[["kelembaban", "suhu", "cuaca"]].copy()

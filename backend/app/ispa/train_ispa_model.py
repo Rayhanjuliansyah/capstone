@@ -4,7 +4,6 @@ from sklearn.preprocessing import LabelEncoder
 import joblib
 import os
 
-# === Buat dataset dummy (bisa diganti dengan data asli) ===
 data = {
     "kelembaban": [80, 70, 85, 90, 75, 60],
     "suhu": [28, 30, 27, 26, 29, 31],

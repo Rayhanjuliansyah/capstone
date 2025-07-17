@@ -1,15 +1,26 @@
 import { createRouter, createWebHistory } from 'vue-router'
 
 // Import komponen halaman
+import Home from '@/views/Home.vue'
 import HomePage from '@/components/HomePage.vue'
-import VisualisasiPage from '@/components/visualisasi.vue'
+import Dashboard from '@/components/Dashboard.vue'
+import VisualisasiPage from '@/components/Visualisasi.vue'
 
 const routes = [
   {
     path: '/',
     name: 'Home',
-    component: HomePage,
-    alias: '/dashboard' // Alias untuk akses lewat '/dashboard'
+    component: Home
+  },
+  {
+    path: '/homepage',
+    name: 'HomePage',
+    component: HomePage
+  },
+  {
+    path: '/dashboard',
+    name: 'Dashboard',
+    component: Dashboard
   },
   {
     path: '/visualisasi',

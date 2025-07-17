@@ -1,4 +1,5 @@
 from flask import Blueprint, request, jsonify
+from . import predict, cuaca
 import joblib
 import numpy as np
 
